@@ -1,0 +1,13 @@
+
+.category-container .example-viewport {
+  height: 200px;
+}
+
+.category-container .example-viewport .cdk-virtual-scroll-content-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.category-container .example-item {
+  width: 300px;
+}

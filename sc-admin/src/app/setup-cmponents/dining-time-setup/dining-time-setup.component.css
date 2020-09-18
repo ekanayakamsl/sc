@@ -1,0 +1,26 @@
+/*.mat-card-dining-tme {*/
+  /*width: 150px;*/
+  /*!*height: 120px;*!*/
+/*}*/
+
+/*.mat-card-dining-tme .mat-card-title {*/
+  /*color: blue;*/
+  /*font-size: large;*/
+  /*border-bottom: 2px black;*/
+/*}*/
+
+table {
+  width: 100%;
+}
+
+.tool-bar {
+  background-color: white;
+}
+
+.tool-bar .mat-toolbar-row {
+  flex: auto;
+}
+
+.tool-bar .mat-paginator {
+  float: left;
+}

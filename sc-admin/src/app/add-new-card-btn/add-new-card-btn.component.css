@@ -1,0 +1,13 @@
+.item-card {
+  width: 150px;
+  height: 150px;
+  margin: 5px;
+  padding: 5px;
+}
+
+.btn {
+  display: block;
+  margin: auto;
+  width: 80%;
+  height: 80%;
+}

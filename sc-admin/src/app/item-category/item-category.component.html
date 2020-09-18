@@ -1,0 +1,14 @@
+<!--<mat-card class="cat-container" *ngFor="let category of categories">-->
+    <!--<app-img-card [tile]="category"></app-img-card>-->
+<!--</mat-card>-->
+
+<mat-card class="category-container">
+  <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="200" class="example-viewport">
+    <div *cdkVirtualFor="let category of categories">
+      <app-img-card class="example-item" [tile]="category"></app-img-card>
+    </div>
+    <div>
+      <app-add-new-card-btn class="example-item"></app-add-new-card-btn>
+    </div>
+  </cdk-virtual-scroll-viewport>
+</mat-card>
