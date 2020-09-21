@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {DiningTimeDialogComponent, DiningTimeDialogData} from '../dining-time-dialog/dining-time-dialog.component';
 import {DiningTime} from '../../models/dining-time';
 import {DiningTimeService} from '../../service/dining-time.service';
@@ -60,14 +60,16 @@ export class DiningTimeSetupComponent implements AfterViewInit, OnInit {
 
     const index = ELEMENT_DATA.indexOf(diningTime);
 
-    const dialogRef = this.dialog.open(DiningTimeDialogComponent, {
-      width: '250px',
-      data: DiningTime.toDiningTimeDialogData(diningTime, isNew)
-    });
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.hasBackdrop = false;
+    dialogConfig.width = '250px';
+    dialogConfig.data = DiningTime.toDiningTimeDialogData(diningTime, isNew);
+
+    const dialogRef = this.dialog.open(DiningTimeDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('result', result);
-      if (result !== undefined) {
+      if (result !== undefined && result != null) {
         if (!isNew) {
           ELEMENT_DATA[index] = DiningTime.toDiningTime(result);
         } else {

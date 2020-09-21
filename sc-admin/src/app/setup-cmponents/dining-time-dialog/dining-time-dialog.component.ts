@@ -39,7 +39,7 @@ export class DiningTimeDialogComponent implements OnInit {
 
   onSave(): void {
     if (this.formGroup.valid) {
-      this.data = new DiningTimeDialogData(this.formGroup);
+      this.data = new DiningTimeDialogData(this.formGroup, this.data.isNew);
       if (this.data.isNew) {
         this.save(this.data);
       } else {
@@ -49,17 +49,18 @@ export class DiningTimeDialogComponent implements OnInit {
   }
 
   private save(data: DiningTimeDialogData): void {
-    this.diningTimeService.save(DiningTime.toDiningTime(data)).subscribe(
+    const diningTime = DiningTime.toDiningTime(data);
+    this.diningTimeService.save(diningTime).subscribe(
       response => {
+        this.dialogRef.close(diningTime);
       });
   }
 
   private update(data: DiningTimeDialogData): void {
-    console.log('clicked update response');
     const diningTime = DiningTime.toDiningTime(data);
     this.diningTimeService.update(diningTime, diningTime.name).subscribe(
       response => {
-        console.log('response', response);
+        this.dialogRef.close(diningTime);
       });
   }
 }
@@ -72,10 +73,11 @@ export class DiningTimeDialogData {
   active: boolean;
   isNew: boolean;
 
-  constructor(formGroup: FormGroup) {
+  constructor(formGroup: FormGroup, isNew: boolean) {
     this.name = formGroup.get('name').value;
     this.from = formGroup.get('from').value;
     this.to = formGroup.get('to').value;
     this.active = formGroup.get('active').value;
+    this.isNew = isNew;
   }
 }
