@@ -34,5 +34,8 @@ export class DiningTimeService {
     return this.http.put(this.URL + '/' + name, body, {headers});
   }
 
+  delete(name: string): Observable<any> {
+    return this.http.delete(this.URL + '/' + name);
+  }
 
 }

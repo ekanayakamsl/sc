@@ -14,6 +14,7 @@ import { DiningTimeSetupComponent } from './setup-cmponents/dining-time-setup/di
 import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { DiningTimeDialogComponent } from './setup-cmponents/dining-time-dialog/dining-time-dialog.component';
 import {HttpClientModule} from '@angular/common/http';
+import { MessageDialogComponent } from './common-components/message-dialog/message-dialog.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {HttpClientModule} from '@angular/common/http';
     DealogAddCatComponent,
     DiningTimeSetupComponent,
     MaintenanceComponent,
-    DiningTimeDialogComponent
+    DiningTimeDialogComponent,
+    MessageDialogComponent
   ],
   imports: [
     BrowserModule,

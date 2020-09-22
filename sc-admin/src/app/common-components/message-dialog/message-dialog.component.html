@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>
+  {{data.title}}
+</h2>
+<div mat-dialog-content>
+  {{data.message}}
+</div>
+<div mat-dialog-actions *ngIf="data.btnList.length>0">
+  <div class="flex-container" *ngFor="let btn of data.btnList">
+    <button mat-raised-button *ngIf="btn===0" (click)="onClick(btn)">Ok</button>
+    <button mat-raised-button *ngIf="btn===1" (click)="onClick(btn)">Cancel</button>
+    <button mat-raised-button *ngIf="btn===2" (click)="onClick(btn)">Yes</button>
+    <button mat-raised-button *ngIf="btn===3" (click)="onClick(btn)">No</button>
+  </div>
+</div>

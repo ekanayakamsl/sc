@@ -6,6 +6,11 @@ import {DiningTimeDialogComponent, DiningTimeDialogData} from '../dining-time-di
 import {DiningTime} from '../../models/dining-time';
 import {DiningTimeService} from '../../service/dining-time.service';
 import {__await} from 'tslib';
+import {
+  MessageDialogButton,
+  MessageDialogComponent,
+  MessageDialogComponentData
+} from '../../common-components/message-dialog/message-dialog.component';
 
 @Component({
   selector: 'app-dining-time-setup',
@@ -19,7 +24,8 @@ export class DiningTimeSetupComponent implements AfterViewInit, OnInit {
 
   constructor(
     public dialog: MatDialog,
-    public diningTimeService: DiningTimeService) {}
+    public diningTimeService: DiningTimeService) {
+  }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -48,12 +54,22 @@ export class DiningTimeSetupComponent implements AfterViewInit, OnInit {
   }
 
   onEdit(element): void {
-    console.log(element);
     this.openDialog(element, false);
   }
 
   onDelete(element): void {
-    console.log(element);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.hasBackdrop = false;
+    dialogConfig.data = new MessageDialogComponentData(
+      'Delete', 'Are you sure to delete dining time ' + element.name + ' ?', [MessageDialogButton.NO, MessageDialogButton.YES]);
+
+    const dialogRef = this.dialog.open(MessageDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (MessageDialogButton.YES === result) {
+        this.diningTimeService.delete(element.name);
+      }
+    });
   }
 
   openDialog(diningTime: DiningTime, isNew: boolean): void {
