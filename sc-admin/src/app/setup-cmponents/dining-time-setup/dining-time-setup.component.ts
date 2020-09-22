@@ -14,7 +14,7 @@ import {__await} from 'tslib';
 })
 export class DiningTimeSetupComponent implements AfterViewInit, OnInit {
 
-  displayedColumns: string[] = ['name', 'from', 'to', 'edit', 'delete'];
+  displayedColumns: string[] = ['name', 'from', 'to', 'active', 'action'];
   dataSource = new MatTableDataSource<DiningTime>(ELEMENT_DATA);
 
   constructor(
@@ -63,7 +63,7 @@ export class DiningTimeSetupComponent implements AfterViewInit, OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.hasBackdrop = false;
     dialogConfig.width = '250px';
-    dialogConfig.data = DiningTime.toDiningTimeDialogData(diningTime, isNew);
+    dialogConfig.data = DiningTimeDialogData.fromDiningTime(diningTime, isNew);
 
     const dialogRef = this.dialog.open(DiningTimeDialogComponent, dialogConfig);
 
@@ -71,9 +71,9 @@ export class DiningTimeSetupComponent implements AfterViewInit, OnInit {
       console.log('result', result);
       if (result !== undefined && result != null) {
         if (!isNew) {
-          ELEMENT_DATA[index] = DiningTime.toDiningTime(result);
+          ELEMENT_DATA[index] = DiningTimeDialogData.toDiningTime(result);
         } else {
-          ELEMENT_DATA.push(DiningTime.toDiningTime(result));
+          ELEMENT_DATA.push(DiningTimeDialogData.toDiningTime(result));
         }
         console.log('ELEMENT_DATA', ELEMENT_DATA);
         this.dataSource = new MatTableDataSource<DiningTime>(ELEMENT_DATA);

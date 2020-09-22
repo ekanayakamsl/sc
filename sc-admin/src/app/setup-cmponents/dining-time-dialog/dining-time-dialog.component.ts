@@ -39,7 +39,7 @@ export class DiningTimeDialogComponent implements OnInit {
 
   onSave(): void {
     if (this.formGroup.valid) {
-      this.data = new DiningTimeDialogData(this.formGroup, this.data.isNew);
+      this.data = DiningTimeDialogData.fromFormGroup(this.formGroup, this.data.isNew);
       if (this.data.isNew) {
         this.save(this.data);
       } else {
@@ -49,7 +49,7 @@ export class DiningTimeDialogComponent implements OnInit {
   }
 
   private save(data: DiningTimeDialogData): void {
-    const diningTime = DiningTime.toDiningTime(data);
+    const diningTime = DiningTimeDialogData.toDiningTime(data);
     this.diningTimeService.save(diningTime).subscribe(
       response => {
         this.dialogRef.close(diningTime);
@@ -57,7 +57,7 @@ export class DiningTimeDialogComponent implements OnInit {
   }
 
   private update(data: DiningTimeDialogData): void {
-    const diningTime = DiningTime.toDiningTime(data);
+    const diningTime = DiningTimeDialogData.toDiningTime(data);
     this.diningTimeService.update(diningTime, diningTime.name).subscribe(
       response => {
         this.dialogRef.close(diningTime);
@@ -73,11 +73,33 @@ export class DiningTimeDialogData {
   active: boolean;
   isNew: boolean;
 
-  constructor(formGroup: FormGroup, isNew: boolean) {
-    this.name = formGroup.get('name').value;
-    this.from = formGroup.get('from').value;
-    this.to = formGroup.get('to').value;
-    this.active = formGroup.get('active').value;
-    this.isNew = isNew;
+  public static fromDiningTime(diningTime: DiningTime, isNew: boolean): DiningTimeDialogData {
+    return {
+      name: diningTime.name,
+      from: diningTime.from,
+      to: diningTime.to,
+      active: diningTime.active,
+      isNew
+    };
+  }
+
+  public static toDiningTime(result: DiningTimeDialogData): DiningTime {
+    return {
+      id: result.name,
+      name: result.name,
+      from: result.from,
+      to: result.to,
+      active: result.active
+    };
+  }
+
+  public static fromFormGroup(formGroup: FormGroup, isNew: boolean): DiningTimeDialogData {
+    return {
+      name: formGroup.get('name').value,
+      from: formGroup.get('from').value,
+      to: formGroup.get('to').value,
+      active: formGroup.get('active').value,
+      isNew
+    };
   }
 }
