@@ -15,6 +15,10 @@
 <mat-card>
   <mat-card-title>Dining Times</mat-card-title>
   <mat-card-content>
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)"  #input>
+    </mat-form-field>
     <div>
       <table mat-table [dataSource]="dataSource">
 
