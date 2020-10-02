@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {DiningTime} from '../models/dining-time';
+import {ResponseWrapper} from '../models/response';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,8 @@ export class DiningTimeService {
     private http: HttpClient) {
   }
 
-  getAll(): Observable<DiningTime[]> {
-    return this.http.get<DiningTime[]>(this.URL);
+  getAll(): Observable<ResponseWrapper<DiningTime[]>> {
+    return this.http.get<ResponseWrapper<DiningTime[]>>(this.URL);
   }
 
   getByCode(name: string): Observable<DiningTime> {

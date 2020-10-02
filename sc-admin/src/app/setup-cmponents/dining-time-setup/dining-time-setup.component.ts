@@ -32,7 +32,7 @@ export class DiningTimeSetupComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
     this.diningTimeService.getAll().subscribe((diningTimes) => {
       if (diningTimes !== undefined && diningTimes !== null) {
-        diningTimes.forEach(diningTime => {
+        diningTimes.data.forEach(diningTime => {
             ELEMENT_DATA.push(diningTime);
           }
         );
