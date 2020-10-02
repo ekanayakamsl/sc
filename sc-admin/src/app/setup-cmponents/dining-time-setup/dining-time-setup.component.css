@@ -13,20 +13,28 @@ table {
   width: 100%;
 }
 
+.mat-column-code {
+  width: 15%;
+}
+
 .mat-column-name {
-  width: 40%;
+  width: 15%;
+}
+
+.mat-column-description {
+  width: 25%;
 }
 
 .mat-column-from {
-  width: 15%;
+  width: 10%;
 }
 
 .mat-column-to {
-  width: 15%;
+  width: 10%;
 }
 
 .mat-column-active {
-  width: 15%;
+  width: 10%;
 }
 
 .mat-column-action {

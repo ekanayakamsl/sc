@@ -9,6 +9,6 @@ export class Status {
 }
 
 export class Message {
-  message: string;
+  short: string;
   detail: string;
 }

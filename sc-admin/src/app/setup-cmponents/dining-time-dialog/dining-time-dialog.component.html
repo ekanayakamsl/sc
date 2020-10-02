@@ -1,12 +1,20 @@
 <form [formGroup]="formGroup">
   <h2 mat-dialog-title>
-    <span *ngIf="!data.isNew"> Edit Dining Time {{data.name}} </span>
+    <span *ngIf="!data.isNew"> Edit Dining Time {{data.code}} </span>
     <span *ngIf="data.isNew"> Add New Dining Time </span>
   </h2>
   <div mat-dialog-content>
     <mat-form-field *ngIf="data.isNew">
+      <mat-label> Code</mat-label>
+      <input matInput formControlName="code">
+    </mat-form-field>
+    <mat-form-field>
       <mat-label> Name</mat-label>
       <input matInput formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label> Description</mat-label>
+      <input matInput formControlName="description">
     </mat-form-field>
     <mat-form-field>
       <mat-label> From</mat-label>

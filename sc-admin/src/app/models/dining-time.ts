@@ -1,7 +1,8 @@
 export class DiningTime {
-  id: string;
+  code: string;
   name: string;
+  description: string;
   from: string;
   to: string;
-  active: boolean;
+  isActive: boolean;
 }

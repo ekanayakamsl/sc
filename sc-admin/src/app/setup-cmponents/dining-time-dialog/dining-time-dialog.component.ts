@@ -1,8 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 import {DiningTime} from '../../models/dining-time';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {DiningTimeService} from '../../service/dining-time.service';
+import {MessageDialogButton, MessageDialogComponentData} from '../../common-components/message-dialog/message-dialog.component';
 
 @Component({
   selector: 'app-dining-time-dialog',
@@ -13,7 +14,9 @@ export class DiningTimeDialogComponent implements OnInit {
 
   formGroup = this.fb.group(
     {
+      code: ['', Validators.required],
       name: ['', Validators.required],
+      description: [''],
       from: ['', Validators.required],
       to: ['', Validators.required],
       active: ['', Validators.required],
@@ -29,7 +32,6 @@ export class DiningTimeDialogComponent implements OnInit {
 
   ngOnInit(): void {
     const {isNew, ...formData} = this.data;
-    console.log('Form data', formData);
     this.formGroup.setValue(formData);
   }
 
@@ -58,16 +60,24 @@ export class DiningTimeDialogComponent implements OnInit {
 
   private update(data: DiningTimeDialogData): void {
     const diningTime = DiningTimeDialogData.toDiningTime(data);
-    this.diningTimeService.update(diningTime, diningTime.name).subscribe(
+    this.diningTimeService.update(diningTime, diningTime.code).subscribe(
       response => {
-        this.dialogRef.close(diningTime);
+        if (response.status.code === 'Success') {
+          this.dialogRef.close(diningTime);
+        } else {
+          const dialogConfig = new MatDialogConfig();
+          dialogConfig.data = new MessageDialogComponentData(
+            response.message.short, response.message.detail, [MessageDialogButton.OK]);
+        }
       });
   }
 }
 
 export class DiningTimeDialogData {
 
+  code: string;
   name: string;
+  description: string;
   from: string;
   to: string;
   active: boolean;
@@ -75,27 +85,32 @@ export class DiningTimeDialogData {
 
   public static fromDiningTime(diningTime: DiningTime, isNew: boolean): DiningTimeDialogData {
     return {
+      code: diningTime.code,
       name: diningTime.name,
+      description: diningTime.description,
       from: diningTime.from,
       to: diningTime.to,
-      active: diningTime.active,
+      active: diningTime.isActive,
       isNew
     };
   }
 
   public static toDiningTime(result: DiningTimeDialogData): DiningTime {
     return {
-      id: result.name,
+      code: result.code,
       name: result.name,
+      description: result.description,
       from: result.from,
       to: result.to,
-      active: result.active
+      isActive: result.active
     };
   }
 
   public static fromFormGroup(formGroup: FormGroup, isNew: boolean): DiningTimeDialogData {
     return {
+      code: formGroup.get('code').value,
       name: formGroup.get('name').value,
+      description: formGroup.get('description').value,
       from: formGroup.get('from').value,
       to: formGroup.get('to').value,
       active: formGroup.get('active').value,

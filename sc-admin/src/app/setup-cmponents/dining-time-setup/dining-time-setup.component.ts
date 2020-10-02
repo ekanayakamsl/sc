@@ -19,7 +19,7 @@ import {
 })
 export class DiningTimeSetupComponent implements AfterViewInit, OnInit {
 
-  displayedColumns: string[] = ['name', 'from', 'to', 'active', 'action'];
+  displayedColumns: string[] = ['code', 'name', 'description',  'from', 'to', 'active', 'action'];
   dataSource = new MatTableDataSource<DiningTime>(ELEMENT_DATA);
 
   constructor(
@@ -32,10 +32,16 @@ export class DiningTimeSetupComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
     this.diningTimeService.getAll().subscribe((diningTimes) => {
       if (diningTimes !== undefined && diningTimes !== null) {
-        diningTimes.data.forEach(diningTime => {
-            ELEMENT_DATA.push(diningTime);
-          }
-        );
+        if (diningTimes.status.code === 'Success') {
+          diningTimes.data.forEach(diningTime => {
+              ELEMENT_DATA.push(diningTime);
+            }
+          );
+        } else {
+          const dialogConfig = new MatDialogConfig();
+          dialogConfig.data = new MessageDialogComponentData(
+            diningTimes.message.short, diningTimes.message.detail, [MessageDialogButton.OK]);
+        }
       }
       this.dataSource = new MatTableDataSource<DiningTime>(ELEMENT_DATA);
     });

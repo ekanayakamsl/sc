@@ -19,24 +19,24 @@ export class DiningTimeService {
     return this.http.get<ResponseWrapper<DiningTime[]>>(this.URL);
   }
 
-  getByCode(name: string): Observable<DiningTime> {
-    return this.http.get<DiningTime>(this.URL + '/' + name);
+  getByCode(name: string): Observable<ResponseWrapper<DiningTime>> {
+    return this.http.get<ResponseWrapper<DiningTime>>(this.URL + '/' + name);
   }
 
-  save(diningTime: DiningTime): Observable<any> {
+  save(diningTime: DiningTime): Observable<ResponseWrapper<any>> {
     const headers = {'content-type': 'application/json'};
     const body = JSON.stringify(diningTime);
-    return this.http.post(this.URL, body, {headers});
+    return this.http.post<ResponseWrapper<any>>(this.URL, body, {headers});
   }
 
-  update(diningTime: DiningTime, name: string): Observable<any> {
+  update(diningTime: DiningTime, name: string): Observable<ResponseWrapper<any>> {
     const headers = {'content-type': 'application/json'};
     const body = JSON.stringify(diningTime);
-    return this.http.put(this.URL + '/' + name, body, {headers});
+    return this.http.put<ResponseWrapper<any>>(this.URL + '/' + name, body, {headers});
   }
 
-  delete(name: string): Observable<any> {
-    return this.http.delete(this.URL + '/' + name);
+  delete(name: string): Observable<ResponseWrapper<any>> {
+    return this.http.delete<ResponseWrapper<any>>(this.URL + '/' + name);
   }
 
 }
