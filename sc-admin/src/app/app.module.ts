@@ -15,6 +15,8 @@ import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { DiningTimeDialogComponent } from './setup-cmponents/dining-time-dialog/dining-time-dialog.component';
 import {HttpClientModule} from '@angular/common/http';
 import { MessageDialogComponent } from './common-components/message-dialog/message-dialog.component';
+import { CustomerTypeSetupComponent } from './setup-cmponents/customer-type-setup/customer-type-setup.component';
+import { CustomerTypeDialogComponent } from './setup-cmponents/customer-type-dialog/customer-type-dialog.component';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { MessageDialogComponent } from './common-components/message-dialog/messa
     DiningTimeSetupComponent,
     MaintenanceComponent,
     DiningTimeDialogComponent,
-    MessageDialogComponent
+    MessageDialogComponent,
+    CustomerTypeSetupComponent,
+    CustomerTypeDialogComponent
   ],
   imports: [
     BrowserModule,

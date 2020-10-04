@@ -1,0 +1,31 @@
+<form [formGroup]="formGroup">
+  <h2 mat-dialog-title>
+    <span *ngIf="!data.isNew"> Edit Customer Type {{data.code}} </span>
+    <span *ngIf="data.isNew"> Add New Customer Type </span>
+  </h2>
+  <div mat-dialog-content>
+    <mat-form-field *ngIf="data.isNew">
+      <mat-label> Code</mat-label>
+      <input matInput formControlName="code">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label> Name</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label> Description</mat-label>
+      <input matInput formControlName="description">
+    </mat-form-field>
+    <section>
+      <mat-checkbox color="primary" formControlName="internal">Internal</mat-checkbox>
+    </section>
+    <section>
+      <mat-checkbox color="primary" formControlName="active">Active</mat-checkbox>
+    </section>
+
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-button (click)="onSave()">Save</button>
+  </div>
+</form>
