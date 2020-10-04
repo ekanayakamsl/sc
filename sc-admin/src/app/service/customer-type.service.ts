@@ -1,16 +1,16 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {DiningTime} from "../models/dining-time";
 import {Observable} from "rxjs/index";
 import {ResponseWrapper} from "../models/response";
 import {CustomerType} from "../models/customer-type";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerTypeService {
 
-  private readonly URL = 'https://us-central1-test-ce3be.cloudfunctions.net/customertype';
+  private readonly URL = environment.baseUrl + environment.dash + environment.customerTypeEndPoint;
 
   constructor(
     private http: HttpClient) {

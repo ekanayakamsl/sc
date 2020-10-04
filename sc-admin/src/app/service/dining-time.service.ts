@@ -3,13 +3,14 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {DiningTime} from '../models/dining-time';
 import {ResponseWrapper} from '../models/response';
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DiningTimeService {
 
-  private readonly URL = 'https://us-central1-test-ce3be.cloudfunctions.net/diningtime';
+  private readonly URL = environment.baseUrl + environment.dash + environment.diningTimeEndpoint;
 
   constructor(
     private http: HttpClient) {
@@ -35,8 +36,8 @@ export class DiningTimeService {
     return this.http.put<ResponseWrapper<any>>(this.URL + '/' + name, body, {headers});
   }
 
-  delete(name: string): Observable<ResponseWrapper<any>> {
-    return this.http.delete<ResponseWrapper<any>>(this.URL + '/' + name);
+  delete(code: string): Observable<ResponseWrapper<any>> {
+    return this.http.delete<ResponseWrapper<any>>(this.URL + '/' + code);
   }
 
 }

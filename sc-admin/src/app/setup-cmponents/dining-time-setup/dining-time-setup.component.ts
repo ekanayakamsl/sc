@@ -5,7 +5,6 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {DiningTimeDialogComponent, DiningTimeDialogData} from '../dining-time-dialog/dining-time-dialog.component';
 import {DiningTime} from '../../models/dining-time';
 import {DiningTimeService} from '../../service/dining-time.service';
-import {__await} from 'tslib';
 import {
   MessageDialogButton,
   MessageDialogComponent,
@@ -73,7 +72,8 @@ export class DiningTimeSetupComponent implements AfterViewInit, OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (MessageDialogButton.YES === result) {
-        this.diningTimeService.delete(element.name);
+        console.log('Closed', result);
+        this.diningTimeService.delete(element.code);
       }
     });
   }
@@ -90,15 +90,14 @@ export class DiningTimeSetupComponent implements AfterViewInit, OnInit {
     const dialogRef = this.dialog.open(DiningTimeDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('result', result);
       if (result !== undefined && result != null) {
         if (!isNew) {
           ELEMENT_DATA[index] = DiningTimeDialogData.toDiningTime(result);
         } else {
           ELEMENT_DATA.push(DiningTimeDialogData.toDiningTime(result));
         }
-        console.log('ELEMENT_DATA', ELEMENT_DATA);
-        this.dataSource = new MatTableDataSource<DiningTime>(ELEMENT_DATA);
+        this.dataSource.data = ELEMENT_DATA;
+        this.paginator._changePageSize(this.paginator.pageSize);
       }
     });
   }

@@ -20,7 +20,7 @@ import {
 })
 export class CustomerTypeSetupComponent implements AfterViewInit, OnInit {
 
-  displayedColumns: string[] = ['code', 'name', 'description', 'from', 'to', 'active', 'action'];
+  displayedColumns: string[] = ['code', 'name', 'description', 'internal', 'active', 'action'];
   dataSource = new MatTableDataSource<CustomerType>(ELEMENT_DATA);
 
   constructor(
