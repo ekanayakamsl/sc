@@ -8,6 +8,16 @@ export const environment = {
   dash: '/',
   diningTimeEndpoint: 'diningtime',
   customerTypeEndPoint: 'customertype',
+  firebaseConfig: {
+    apiKey: 'AIzaSyBT_cDjhMGfFWUhxvfToZTDsNHbiSO9V0U',
+    authDomain: 'test-ce3be.firebaseapp.com',
+    databaseURL: 'https://test-ce3be.firebaseio.com',
+    projectId: 'test-ce3be',
+    storageBucket: 'test-ce3be.appspot.com',
+    messagingSenderId: '875192875903',
+    appId: '1:875192875903:web:926e7503af0b9b7079384a',
+    measurementId: 'G-82HXZKYVRZ'
+  }
 };
 
 /*
