@@ -71,45 +71,47 @@ export class ImageUploderComponent implements OnInit {
     fd.append(this.param, file.data);
 
     const filesUploadMetadata: FilesUploadMetadata = this.storageService.uploadFileAndGetMetadata('Test Path', file.data);
-
+    file.inProgress = true;
     filesUploadMetadata.uploadProgress$.subscribe(value => {
       file.progress = value;
+      file.inProgress = value === 100;
     });
 
     filesUploadMetadata.downloadUrl$.subscribe(value => {
+      console.log('Download link:  ', value);
     });
 
-    const req = new HttpRequest('POST', this.target, fd, {
-      reportProgress: true
-    });
+    // const req = new HttpRequest('POST', this.target, fd, {
+    //   reportProgress: true
+    // });
 
-    file.inProgress = true;
-    file.sub = this.http.request(req).pipe(
-      map(event => {
-        switch (event.type) {
-          case HttpEventType.UploadProgress:
-            file.progress = Math.round(event.loaded * 100 / event.total);
-            break;
-          case HttpEventType.Response:
-            return event;
-        }
-      }),
-      tap(message => {
-      }),
-      last(),
-      catchError((error: HttpErrorResponse) => {
-        file.inProgress = false;
-        file.canRetry = true;
-        return of(`${file.data.name} upload failed.`);
-      })
-    ).subscribe(
-      (event: any) => {
-        if (typeof (event) === 'object') {
-          this.removeFileFromArray(file);
-          this.complete.emit(event.body);
-        }
-      }
-    );
+    // file.inProgress = true;
+    // file.sub = this.http.request(req).pipe(
+    //   map(event => {
+    //     switch (event.type) {
+    //       case HttpEventType.UploadProgress:
+    //         file.progress = Math.round(event.loaded * 100 / event.total);
+    //         break;
+    //       case HttpEventType.Response:
+    //         return event;
+    //     }
+    //   }),
+    //   tap(message => {
+    //   }),
+    //   last(),
+    //   catchError((error: HttpErrorResponse) => {
+    //     file.inProgress = false;
+    //     file.canRetry = true;
+    //     return of(`${file.data.name} upload failed.`);
+    //   })
+    // ).subscribe(
+    //   (event: any) => {
+    //     if (typeof (event) === 'object') {
+    //       this.removeFileFromArray(file);
+    //       this.complete.emit(event.body);
+    //     }
+    //   }
+    // );
   }
 
   private uploadFiles(): void {
