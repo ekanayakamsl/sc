@@ -22,6 +22,9 @@
         <a title="Cancel" (click)="cancelFile(file)" *ngIf="canCancel(file.uploadState)">
             <mat-icon>cancel</mat-icon>
         </a>
+        <a title="Delete" (click)="deleteFile(file)" *ngIf="canDelete(file.uploadState)">
+            <mat-icon>delete</mat-icon>
+        </a>
       </span>
     </li>
   </ul>

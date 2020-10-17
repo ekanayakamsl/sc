@@ -2,6 +2,7 @@ import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {trigger, state, style, animate, transition} from '@angular/animations';
 import {HttpClient} from '@angular/common/http';
 import {FilesUploadMetadata, StorageService} from '../../service/storage.service';
+import {error} from 'selenium-webdriver';
 
 @Component({
   selector: 'app-filer-uploader',
@@ -40,6 +41,8 @@ export class FilerUploaderComponent {
         this.files.push({
           data: file,
           state: 'in',
+          filePath: '',
+          downloadUrl: '',
           uploadState: UploadState.NOT_STARTED,
           filesUploadMetadata: null
         });
@@ -52,11 +55,13 @@ export class FilerUploaderComponent {
   private uploadFile(file: FileUploadModel): void {
     file.filesUploadMetadata = this.storageService.uploadFileAndGetMetadata(this.mediaFolderPath, file.data);
     file.filesUploadMetadata.uploadTask.then(() => {
+      file.filesUploadMetadata.downloadUrl$.subscribe(value => file.downloadUrl = value);
       file.uploadState = UploadState.SUCCESS;
     });
     file.filesUploadMetadata.uploadTask.catch(() => {
       file.uploadState = UploadState.ERROR;
     });
+    file.filePath = file.filesUploadMetadata.filePath;
     file.uploadState = UploadState.IN_PROGRESS;
   }
 
@@ -89,6 +94,16 @@ export class FilerUploaderComponent {
 
   retryFile(file: FileUploadModel): void {
     this.uploadFile(file);
+  }
+
+  deleteFile(file: FileUploadModel): void {
+    this.storageService.deleteFile(file.filePath).subscribe(() => {
+        file.uploadState = UploadState.DELETED;
+        this.removeFileFromArray(file);
+      },
+      err => {
+        console.log('File delete error', err);
+      });
   }
 
   private removeFileFromArray(file: FileUploadModel): void {
@@ -132,11 +147,17 @@ export class FilerUploaderComponent {
   canRetry(uploadState: UploadState): boolean {
     return uploadState === UploadState.ERROR;
   }
+
+  canDelete(uploadState: UploadState): boolean {
+    return uploadState === UploadState.SUCCESS;
+  }
 }
 
 export class FileUploadModel {
   data: File;
   state: string;
+  filePath: string;
+  downloadUrl: string;
   uploadState: UploadState;
   filesUploadMetadata: FilesUploadMetadata;
 }
@@ -153,5 +174,6 @@ export enum UploadState {
   SUCCESS,
   ERROR,
   CANCEL,
+  DELETED,
 }
 
