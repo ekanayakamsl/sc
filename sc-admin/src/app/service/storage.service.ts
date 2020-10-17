@@ -19,8 +19,9 @@ export class StorageService {
       fileToUpload,
     );
     return {
+      uploadTask,
       uploadProgress$: uploadTask.percentageChanges(),
-      downloadUrl$: this.getDownloadUrl$(uploadTask, filePath),
+      downloadUrl$: this.getDownloadUrl$(uploadTask, filePath)
     };
   }
 
@@ -29,12 +30,13 @@ export class StorageService {
     path: string,
   ): Observable<string> {
     return from(uploadTask).pipe(
-      switchMap((_) => this.storage.ref(path).getDownloadURL()),
+      switchMap(() => this.storage.ref(path).getDownloadURL()),
     );
   }
 }
 
 export interface FilesUploadMetadata {
+  uploadTask: AngularFireUploadTask;
   uploadProgress$: Observable<number>;
   downloadUrl$: Observable<string>;
 }

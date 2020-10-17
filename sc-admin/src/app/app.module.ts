@@ -27,6 +27,7 @@ import {
   AngularFireStorageReference,
   AngularFireUploadTask
 } from '@angular/fire/storage';
+import { FilerUploaderComponent } from './common-components/filer-uploader/filer-uploader.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import {
     CustomerTypeSetupComponent,
     CustomerTypeDialogComponent,
     ImageUploderComponent,
-    TestContainerComponent
+    TestContainerComponent,
+    FilerUploaderComponent
   ],
   imports: [
     BrowserModule,

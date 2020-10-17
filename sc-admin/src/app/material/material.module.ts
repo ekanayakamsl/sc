@@ -15,6 +15,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 const MATERIAL_MODULES = [LayoutModule,
   MatToolbarModule,
@@ -32,7 +33,8 @@ const MATERIAL_MODULES = [LayoutModule,
   MatInputModule,
   FormsModule,
   MatCheckboxModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  MatProgressBarModule
 ];
 
 @NgModule({
