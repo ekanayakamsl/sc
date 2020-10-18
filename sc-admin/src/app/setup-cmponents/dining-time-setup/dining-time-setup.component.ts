@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
@@ -18,7 +18,9 @@ import {
 })
 export class DiningTimeSetupComponent implements AfterViewInit, OnInit {
 
-  displayedColumns: string[] = ['code', 'name', 'description',  'from', 'to', 'active', 'action'];
+  @Input() intData: DiningTime[] = [];
+
+  displayedColumns: string[] = ['code', 'name', 'description', 'from', 'to', 'active', 'action'];
   dataSource = new MatTableDataSource<DiningTime>(ELEMENT_DATA);
 
   constructor(
@@ -29,21 +31,26 @@ export class DiningTimeSetupComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit(): void {
-    this.diningTimeService.getAll().subscribe((diningTimes) => {
-      if (diningTimes !== undefined && diningTimes !== null) {
-        if (diningTimes.status.code === 'Success') {
-          diningTimes.data.forEach(diningTime => {
-              ELEMENT_DATA.push(diningTime);
-            }
-          );
-        } else {
-          const dialogConfig = new MatDialogConfig();
-          dialogConfig.data = new MessageDialogComponentData(
-            diningTimes.message.short, diningTimes.message.detail, [MessageDialogButton.OK]);
-        }
-      }
+    if (this.intData !== undefined || this.intData !== null) {
+      this.intData.forEach(diningTime => ELEMENT_DATA.push(diningTime));
       this.dataSource = new MatTableDataSource<DiningTime>(ELEMENT_DATA);
-    });
+    } else {
+      this.diningTimeService.getAll().subscribe((diningTimes) => {
+        if (diningTimes !== undefined && diningTimes !== null) {
+          if (diningTimes.status.code === 'Success') {
+            diningTimes.data.forEach(diningTime => {
+                ELEMENT_DATA.push(diningTime);
+              }
+            );
+          } else {
+            const dialogConfig = new MatDialogConfig();
+            dialogConfig.data = new MessageDialogComponentData(
+              diningTimes.message.short, diningTimes.message.detail, [MessageDialogButton.OK]);
+          }
+        }
+        this.dataSource = new MatTableDataSource<DiningTime>(ELEMENT_DATA);
+      });
+    }
   }
 
   ngAfterViewInit(): void {

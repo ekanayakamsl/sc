@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {CustomerTypeService} from '../../service/customer-type.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
@@ -20,6 +20,8 @@ import {
 })
 export class CustomerTypeSetupComponent implements AfterViewInit, OnInit {
 
+  @Input() intData: CustomerType[] = [];
+
   displayedColumns: string[] = ['code', 'name', 'description', 'internal', 'active', 'action'];
   dataSource = new MatTableDataSource<CustomerType>(ELEMENT_DATA);
 
@@ -31,21 +33,26 @@ export class CustomerTypeSetupComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit(): void {
-    this.customerTypeService.getAll().subscribe((customerTypes) => {
-      if (customerTypes !== undefined && customerTypes !== null) {
-        if (customerTypes.status.code === 'Success') {
-          customerTypes.data.forEach(customerType => {
-              ELEMENT_DATA.push(customerType);
-            }
-          );
-        } else {
-          const dialogConfig = new MatDialogConfig();
-          dialogConfig.data = new MessageDialogComponentData(
-            customerTypes.message.short, customerTypes.message.detail, [MessageDialogButton.OK]);
-        }
-      }
+    if (this.intData !== undefined || this.intData !== null) {
+      this.intData.forEach(customerType => ELEMENT_DATA.push(customerType));
       this.dataSource = new MatTableDataSource<CustomerType>(ELEMENT_DATA);
-    });
+    } else {
+      this.customerTypeService.getAll().subscribe((customerTypes) => {
+        if (customerTypes !== undefined && customerTypes !== null) {
+          if (customerTypes.status.code === 'Success') {
+            customerTypes.data.forEach(customerType => {
+                ELEMENT_DATA.push(customerType);
+              }
+            );
+          } else {
+            const dialogConfig = new MatDialogConfig();
+            dialogConfig.data = new MessageDialogComponentData(
+              customerTypes.message.short, customerTypes.message.detail, [MessageDialogButton.OK]);
+          }
+        }
+        this.dataSource = new MatTableDataSource<CustomerType>(ELEMENT_DATA);
+      });
+    }
   }
 
   ngAfterViewInit(): void {

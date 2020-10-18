@@ -11,7 +11,7 @@ import {MaterialModule} from './material/material.module';
 import {AddNewCardBtnComponent} from './add-new-card-btn/add-new-card-btn.component';
 import {DealogAddCatComponent} from './dealog-add-cat/dealog-add-cat.component';
 import {DiningTimeSetupComponent} from './setup-cmponents/dining-time-setup/dining-time-setup.component';
-import {MaintenanceComponent} from './maintenance/maintenance.component';
+import {MaintenanceComponent} from './setup-cmponents/maintenance.component';
 import {DiningTimeDialogComponent} from './setup-cmponents/dining-time-dialog/dining-time-dialog.component';
 import {HttpClientModule} from '@angular/common/http';
 import {MessageDialogComponent} from './common-components/message-dialog/message-dialog.component';
@@ -28,8 +28,10 @@ import {
   AngularFireUploadTask
 } from '@angular/fire/storage';
 import { FilerUploaderComponent } from './common-components/filer-uploader/filer-uploader.component';
-import { MenuItemSetupComponent } from './setup-cmponents/menu-item-setup/menu-item-setup.component';
-import { MenuItemDialogComponent } from './setup-cmponents/menu-item-dialog/menu-item-dialog.component';
+import { MenuItemSetupComponent } from './menu/menu-item-setup/menu-item-setup.component';
+import { MenuItemDialogComponent } from './menu/menu-item-dialog/menu-item-dialog.component';
+import { MenuCategorySetupComponent } from './setup-cmponents/menu-category-setup/menu-category-setup.component';
+import { MenuCategoryDialogComponent } from './setup-cmponents/menu-category-dialog/menu-category-dialog.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { MenuItemDialogComponent } from './setup-cmponents/menu-item-dialog/menu
     TestContainerComponent,
     FilerUploaderComponent,
     MenuItemSetupComponent,
-    MenuItemDialogComponent
+    MenuItemDialogComponent,
+    MenuCategorySetupComponent,
+    MenuCategoryDialogComponent
   ],
   imports: [
     BrowserModule,
