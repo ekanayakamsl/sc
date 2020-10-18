@@ -4,10 +4,11 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://us-central1-test-7d838.cloudfunctions.net',
+  baseUrl: 'https://us-central1-test-ce3be.cloudfunctions.net',
   dash: '/',
   diningTimeEndpoint: 'diningtime',
   customerTypeEndPoint: 'customertype',
+  menuItemEndPoint: 'menuItem',
   firebaseConfig: {
     apiKey: 'AIzaSyBT_cDjhMGfFWUhxvfToZTDsNHbiSO9V0U',
     authDomain: 'test-ce3be.firebaseapp.com',

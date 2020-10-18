@@ -14,6 +14,10 @@ export class TestContainerComponent implements OnInit {
     console.log(data); // We just print out data bubbled up from event emitter.
   }
 
+  onCompleteImageUpload(data: any): void {
+    console.log(data); // We just print out data bubbled up from event emitter.
+  }
+
   ngOnInit(): void {
   }
 

@@ -1,4 +1,4 @@
 <mat-card>
   <app-image-uploder  (complete)="onFileComplete($event)"></app-image-uploder>
-  <app-filer-uploader></app-filer-uploader>
+  <app-filer-uploader (complete)="onCompleteImageUpload($event)"></app-filer-uploader>
 </mat-card>

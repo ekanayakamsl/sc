@@ -1,0 +1,40 @@
+table {
+  width: 100%;
+}
+
+.mat-column-code {
+  width: 15%;
+}
+
+.mat-column-name {
+  width: 15%;
+}
+
+.mat-column-description {
+  width: 30%;
+}
+
+.mat-column-internal {
+  width: 15%;
+}
+
+.mat-column-active {
+  width: 10%;
+}
+
+.mat-column-action {
+  width: 15%;
+  min-width: 100px;
+}
+
+.tool-bar {
+  background-color: white;
+}
+
+.tool-bar .mat-toolbar-row {
+  flex: auto;
+}
+
+.tool-bar .mat-paginator {
+  float: left;
+}

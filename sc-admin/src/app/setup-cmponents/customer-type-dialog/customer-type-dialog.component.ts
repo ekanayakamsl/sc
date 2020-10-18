@@ -1,9 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MessageDialogButton, MessageDialogComponentData} from "../../common-components/message-dialog/message-dialog.component";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MAT_DIALOG_DATA, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
-import {CustomerTypeService} from "../../service/customer-type.service";
-import {CustomerType} from "../../models/customer-type";
+import {MessageDialogButton, MessageDialogComponentData} from '../../common-components/message-dialog/message-dialog.component';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
+import {CustomerTypeService} from '../../service/customer-type.service';
+import {CustomerType} from '../../models/customer-type';
 
 @Component({
   selector: 'app-customer-type-dialog',

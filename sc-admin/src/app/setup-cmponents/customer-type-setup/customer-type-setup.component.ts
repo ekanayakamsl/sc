@@ -1,17 +1,17 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
-import {CustomerTypeService} from "../../service/customer-type.service";
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {MatPaginator} from "@angular/material/paginator";
+import {MatTableDataSource} from '@angular/material/table';
+import {CustomerTypeService} from '../../service/customer-type.service';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {MatPaginator} from '@angular/material/paginator';
 import {
   MessageDialogButton, MessageDialogComponent,
   MessageDialogComponentData
-} from "../../common-components/message-dialog/message-dialog.component";
-import {CustomerType} from "../../models/customer-type";
+} from '../../common-components/message-dialog/message-dialog.component';
+import {CustomerType} from '../../models/customer-type';
 import {
   CustomerTypeDialogComponent,
   CustomerTypeDialogData
-} from "../customer-type-dialog/customer-type-dialog.component";
+} from '../customer-type-dialog/customer-type-dialog.component';
 
 @Component({
   selector: 'app-customer-type-setup',

@@ -67,9 +67,11 @@ export class FilerUploaderComponent {
   private uploadFile(file: FileUploadModel): void {
     file.filesUploadMetadata = this.storageService.uploadFileAndGetMetadata(this.mediaFolderPath, file.data);
     file.filesUploadMetadata.uploadTask.then(() => {
-      file.filesUploadMetadata.downloadUrl$.subscribe(value => file.downloadUrl = value);
-      file.uploadState = UploadState.SUCCESS;
-      this.complete.emit(this.files);
+      file.filesUploadMetadata.downloadUrl$.subscribe(value => {
+        file.downloadUrl = value;
+        file.uploadState = UploadState.SUCCESS;
+        this.complete.emit(this.files);
+      });
     });
     file.filesUploadMetadata.uploadTask.catch(() => {
       file.uploadState = UploadState.ERROR;

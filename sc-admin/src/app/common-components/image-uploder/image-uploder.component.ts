@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AcceptTypes, FileUploadModel, UploadState} from '../filer-uploader/filer-uploader.component';
 
 @Component({
@@ -17,6 +17,8 @@ export class ImageUploderComponent implements OnInit {
   @Input() maxFileCount: number = Number.MAX_VALUE;
   @Input() withUploadBtn = true;
 
+  @Output() complete = new EventEmitter<string>();
+
   constructor() {
   }
 
@@ -32,7 +34,8 @@ export class ImageUploderComponent implements OnInit {
           this.imgURL = reader.result.toString();
         };
       } else if (event[0].uploadState === UploadState.SUCCESS) {
-
+        this.imgURL = event[0].downloadUrl;
+        this.complete.emit(this.imgURL);
       }
     } else {
       this.imgURL = null;

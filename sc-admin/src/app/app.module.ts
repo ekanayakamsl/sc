@@ -28,6 +28,8 @@ import {
   AngularFireUploadTask
 } from '@angular/fire/storage';
 import { FilerUploaderComponent } from './common-components/filer-uploader/filer-uploader.component';
+import { MenuItemSetupComponent } from './setup-cmponents/menu-item-setup/menu-item-setup.component';
+import { MenuItemDialogComponent } from './setup-cmponents/menu-item-dialog/menu-item-dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { FilerUploaderComponent } from './common-components/filer-uploader/filer
     CustomerTypeDialogComponent,
     ImageUploderComponent,
     TestContainerComponent,
-    FilerUploaderComponent
+    FilerUploaderComponent,
+    MenuItemSetupComponent,
+    MenuItemDialogComponent
   ],
   imports: [
     BrowserModule,
