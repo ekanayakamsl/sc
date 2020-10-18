@@ -1,8 +1,8 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {trigger, state, style, animate, transition} from '@angular/animations';
 import {HttpClient} from '@angular/common/http';
 import {FilesUploadMetadata, StorageService} from '../../service/storage.service';
-import {error} from 'selenium-webdriver';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-filer-uploader',
@@ -21,11 +21,13 @@ import {error} from 'selenium-webdriver';
 export class FilerUploaderComponent {
 
   @Input() text = 'Upload';
+  @Input() icon = 'file_upload';
   @Input() mediaFolderPath = 'COMMON';
   @Input() accept: AcceptTypes = AcceptTypes.ALL;
   @Input() maxFileCount: number = Number.MAX_VALUE;
+  @Input() withUploadBtn = false;
 
-  @Output() complete = new EventEmitter<string>();
+  @Output() complete = new EventEmitter<Array<FileUploadModel>>();
 
   files: Array<FileUploadModel> = [];
 
@@ -47,9 +49,19 @@ export class FilerUploaderComponent {
           filesUploadMetadata: null
         });
       }
-      this.uploadFiles();
+      this.complete.emit(this.files);
+      fileUpload.value = '';
+      if (!this.withUploadBtn) {
+        this.uploadFiles();
+      }
     };
     fileUpload.click();
+  }
+
+  private uploadFiles(): void {
+    this.files.forEach(file => {
+      this.uploadFile(file);
+    });
   }
 
   private uploadFile(file: FileUploadModel): void {
@@ -57,6 +69,7 @@ export class FilerUploaderComponent {
     file.filesUploadMetadata.uploadTask.then(() => {
       file.filesUploadMetadata.downloadUrl$.subscribe(value => file.downloadUrl = value);
       file.uploadState = UploadState.SUCCESS;
+      this.complete.emit(this.files);
     });
     file.filesUploadMetadata.uploadTask.catch(() => {
       file.uploadState = UploadState.ERROR;
@@ -65,19 +78,13 @@ export class FilerUploaderComponent {
     file.uploadState = UploadState.IN_PROGRESS;
   }
 
-  private uploadFiles(): void {
-    const fileUpload = document.getElementById('fileUpload') as HTMLInputElement;
-    fileUpload.value = '';
-
-    this.files.forEach(file => {
-      this.uploadFile(file);
-    });
-  }
-
   cancelFile(file: FileUploadModel): void {
-    file.filesUploadMetadata.uploadTask.cancel();
+    if (file.filesUploadMetadata != null) {
+      file.filesUploadMetadata.uploadTask.cancel();
+    }
     file.uploadState = UploadState.CANCEL;
     this.removeFileFromArray(file);
+    this.complete.emit(this.files);
   }
 
   pauseFile(file: FileUploadModel): void {
@@ -129,6 +136,10 @@ export class FilerUploaderComponent {
         return 'blue';
     }
     return 'black';
+  }
+
+  canUpload(uploadState: UploadState): boolean {
+    return this.withUploadBtn && uploadState === UploadState.NOT_STARTED;
   }
 
   canPause(uploadState: UploadState): boolean {

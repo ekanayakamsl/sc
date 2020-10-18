@@ -1,15 +1,19 @@
 <div>
   <button mat-button color="warn" (click)="onClick()" [disabled]="maxFileCount <= files.length">
-    <mat-icon>file_upload</mat-icon>
+    <mat-icon>{{icon}}</mat-icon>
     {{text}}
   </button>
   <br/>
   <ul>
     <li *ngFor="let file of files" [@fadeInOut]="file.state">
-      <mat-progress-bar [value]="file.filesUploadMetadata.uploadProgress$ | async"
-                        mode="determinate"></mat-progress-bar>
+      <mat-progress-bar
+        [value]="file.filesUploadMetadata === null ? 0 : file.filesUploadMetadata.uploadProgress$ | async"
+        mode="determinate"></mat-progress-bar>
       <span id="file-label">
         <span [style.color]="getUploadStateColour(file.uploadState)">{{file.data.name}}</span>
+        <a title="Pause" (click)="uploadFile(file)" *ngIf="canUpload(file.uploadState)">
+            <mat-icon>cloud_upload</mat-icon>
+        </a>
         <a title="Pause" (click)="pauseFile(file)" *ngIf="canPause(file.uploadState)">
             <mat-icon>pause_circle_filled</mat-icon>
         </a>

@@ -1,6 +1,8 @@
-<mat-card>
-  <!--<img mat-card-image class="cat-img" src="../../assets/cat-rice.jpg">-->
+<mat-card [style.width.px]=200>
+  <img mat-card-image class="cat-img" [src]="imgURL">
   <mat-card-actions>
-    <app-filer-uploader [accept]="accept" [mediaFolderPath]="mediaFolderPath" [maxFileCount]="1"></app-filer-uploader>
+    <app-filer-uploader [accept]="accept" [mediaFolderPath]="mediaFolderPath" [maxFileCount]="maxFileCount"
+                        [withUploadBtn]="withUploadBtn" [icon]="icon" [text]="text"
+                        (complete)="onComplete($event)"></app-filer-uploader>
   </mat-card-actions>
 </mat-card>
