@@ -9,6 +9,8 @@ export const environment = {
   diningTimeEndpoint: 'diningtime',
   customerTypeEndPoint: 'customertype',
   menuItemEndPoint: 'menuItem',
+  menuCategoryEndPoint: 'menuCategory',
+  masterDataEndPoint: 'masterData',
   firebaseConfig: {
     apiKey: 'AIzaSyBT_cDjhMGfFWUhxvfToZTDsNHbiSO9V0U',
     authDomain: 'test-ce3be.firebaseapp.com',
